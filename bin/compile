@@ -10,8 +10,13 @@ action() {
     sed -u 's/^/-----> /'
 }
 
+cd "$BUILD_DIR"
+
 echo 'Compiling translations' | action
 django-admin compilemessages | indent
 
 echo 'Running migrations' | action
 python manage.py migrate | indent
+
+echo 'Collecting static files' | action
+python manage.py collectstatic --noinput --traceback | indent
