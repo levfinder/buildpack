@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -euo pipefail
+
+indent() {
+    sed -u 's/^/       /'
+}
+
+action() {
+    sed -u 's/^/-----> /'
+}
+
+echo 'Compiling translations' | action
+django-admin compilemessages | indent
+
+echo 'Running migrations' | action
+python manage.py migrate | indent
